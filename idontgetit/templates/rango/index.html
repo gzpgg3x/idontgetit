@@ -1,0 +1,59 @@
+{% extends "rango/base.html" %}
+
+{% block title %}Welcome to idontgetit!{% endblock %}
+
+{% block body_block %}
+<div class="hero-unit">
+<!--     <img src="http://www.pd4pic.com/images/stick-outline-silhouette-backpacker-cartoon-free.png" style="width: 85px" alt="Picture of Rango" />  -->   
+    <h1>idontgetit</h1>
+
+    <br/>
+
+    <p>Platform for friends to help friends better understand all things that are funny.</p>
+<!--     <img src="http://www.pd4pic.com/images/stick-outline-silhouette-backpacker-cartoon-free.png" style="width: 85px" alt="Picture of Rango" /> -->
+</div>
+</div>
+
+<div class="row-fluid">
+    <div class="span6">
+        <!-- <h2>Top Five Tech Topics</h2> -->
+<!--         <h2>Hall of Fame Reviewers Lonely DevNet</h2>
+        <img src="http://g.fastcompany.net/multisite_files/fastcompany/imagecache/inline-small/inline/2013/10/3018599-inline-i-7-now-180-the-recommender.jpg" style="width: 133px" alt="Picture of Tarikh" /> 
+        <img src="https://pbs.twimg.com/profile_images/3408414425/25d2e576f4f7535249fe9756c0a8b86d.jpeg" style="width: 133px" alt="Picture of Sam O'Keefe" />                
+        <img src="http://wearenytech.com/uploads/humans/127-jessica-lawrence.jpg?1303747039" style="width: 133px" alt="Picture of JessicaLawrence" />  
+        <img src="http://www.alleywatch.com/wp-content/uploads/2014/02/ADAM_ROTHENBERG.png" style="width: 133px" alt="Picture of AdamROTHENBERG" /> 
+        <img src="http://appnationconference.com/nyc/files/2013/05/bryan-hamilton.jpg" style="width: 133px" alt="Picture of Bryan Hamilton" /> 
+        <img src="http://silenok.com/ElenaHeadshot.jpg" style="width: 133px" alt="Picture of Elena Silenok" />
+        <img src="http://static6.businessinsider.com/image/4ce5401d4bd7c88845040000/first-round-capital-promotes-charlie-odonnell-to-principal.jpg" style="width: 133px" alt="Picture of Charlie O’Donnell" />
+        <img src="http://d13pix9kaak6wt.cloudfront.net/background/lshitch_1347570325_21.png" style="width: 133px" alt="Picture of Leslie" /> -->        
+                       
+<!--         {% if categories %}
+        <ul>
+            {% for category in categories %}
+            <li><a href="/rango/category/{{ category.url }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>No categories at present.</strong>
+        {% endif %} -->
+
+    </div>
+    <!--/span-->
+    <div class="span6">
+        <h2>My List of Questions</h2>
+        {% if pages %}
+        <ul>
+            {% for page in pages %}
+            <li><a href="{{ page.url}}">{{ page.title }}</a> </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <strong>No answers at present.</strong>
+        {% endif %}
+
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+
+{% endblock %}
