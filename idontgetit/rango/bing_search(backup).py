@@ -37,11 +37,6 @@ def run_query(search_terms):
     password_mgr.add_password(None, search_url, username, bing_api_key)
 
     # Create our results list which we'll populate.
-
-    url ='http://data.tmsapi.com/v1/sports/all/events/airings?lineupId=USA-IL68236-X&startDateTime=' + search_terms + 'Z&api_key=6ub7wyt4upg4gmupmt6xpwjy'
-    req = urllib2.urlopen(url).read()
-    raw = json.loads(req)    
-    #print raw
     results = []
 
     try:
@@ -54,16 +49,14 @@ def run_query(search_terms):
         response = urllib2.urlopen(search_url).read()
 
         # Convert the string response to a Python dictionary object.
-        #json_response = json.loads(response)
-        json_response = json.loads(req)
-        print json_response
+        json_response = json.loads(response)
+
         # Loop through each page returned, populating out results list.
-        #for result in json_response['d']['results']:
-        for result in json_response:
+        for result in json_response['d']['results']:
             results.append({
-                'title': result['program']['eventTitle'],
-                'link': "www.google.com",
-                'summary': result['program']['eventTitle']})
+                'title': result['Title'],
+                'link': result['Url'],
+                'summary': result['Description']})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError, e:
