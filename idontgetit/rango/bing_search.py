@@ -38,7 +38,7 @@ def run_query(search_terms):
 
     # Create our results list which we'll populate.
 
-    url ='http://data.tmsapi.com/v1/sports/all/events/airings?lineupId=USA-IL68236-X&startDateTime=' + search_terms + 'Z&api_key=6ub7wyt4upg4gmupmt6xpwjy'
+    url ='http://data.tmsapi.com/v1/sports/all/events/airings?lineupId=USA-IL68236-X&startDateTime=' + search_terms + 'Z&api_key=ubx2nk3jw3arr7tgy3q9wwcd'
     req = urllib2.urlopen(url).read()
     raw = json.loads(req)    
     #print raw
@@ -61,9 +61,10 @@ def run_query(search_terms):
         #for result in json_response['d']['results']:
         for result in json_response:
             results.append({
+                # 'title': result['program']['eventTitle'],
                 'title': result['program']['eventTitle'],
                 'link': "www.google.com",
-                'summary': result['program']['eventTitle']})
+                'summary': result['program']['tmsId']})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError, e:
