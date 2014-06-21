@@ -62,7 +62,7 @@ def run_query(search_terms):
         for result in json_response:
             results.append({
                 # 'title': result['program']['eventTitle'],
-                'title': result['program']['eventTitle'],
+                'title': result['program']['tmsId'],
                 'link': "www.google.com",
                 'summary': result['program']['tmsId']})
 
@@ -74,18 +74,18 @@ def run_query(search_terms):
     return results
 
 
-if __name__=="__main__":
-        print "Test Big Search"
-        print ">>>> "
-        print run_query("soccer games")[0]
+# if __name__=="__main__":
+#         print "Test Big Search"
+#         print ">>>> "
+#         print run_query("soccer games")[0]
 
 
 
-        #create a json string using json.dumps()
-        data = json.dumps(run_query("soccer games"))
+#         #create a json string using json.dumps()
+#         data = json.dumps(run_query("soccer games"))
 
-        #store the json data as a regular string
-        json_data = json.loads(data)
+#         #store the json data as a regular string
+#         json_data = json.loads(data)
 
-        #print the first json string in the list of json strings
-        print "\n\n >> %s" % json_data[0]['title']
+#         #print the first json string in the list of json strings
+#         print "\n\n >> %s" % json_data[0]['title']
