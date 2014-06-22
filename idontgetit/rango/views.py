@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from rango.models import Category
 from rango.models import UserProfile
-from rango.forms import CategoryForm
+from rango.forms import CategoryForm, FantasyForm
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
@@ -179,6 +179,60 @@ def category(request, category_name_url):
     # Go render the response and return it to the client.
     return render_to_response('rango/category.html', context_dict, context)
 
+def page(request, page_name_url):
+    # Request our context
+    context = RequestContext(request)
+
+    # Change underscores in the category name to spaces.
+    # URL's don't handle spaces well, so we encode them as underscores.
+    page_name = decode_url(page_name_url)
+
+    # Build up the dictionary we will use as out template context dictionary.
+    context_dict = {'page_name': page_name, 'page_name_url': page_name_url}
+    #context_dict = {'category_name': category_name, 'category_name_url': category_name}
+
+    pag_list = get_page_list()
+    context_dict['pag_list'] = pag_list
+
+    try:
+        # Find the category with the given name.
+        # Raises an exception if the category doesn't exist.
+        # We also do a case insensitive match.
+        page = Page.objects.get(name__iexact=page_name)
+        context_dict['page'] = page
+        # Retrieve all the associated pages.
+        # Note that filter returns >= 1 model instance.
+        fantasys = Fantasy.objects.filter(page=page).order_by('-views')
+
+        # Adds our results list to the template context under name pages.
+        context_dict['fantasys'] = fantasys
+    except Page.DoesNotExist:
+        # We get here if the category does not exist.
+        # Will trigger the template to display the 'no category' message.
+        pass
+
+    if request.method == 'POST':
+        #query = request.POST['query'].strip()
+        query = request.POST.get('query')
+        if query:
+            result_list = run_query(query)
+            context_dict['result_list'] = result_list
+
+    #pag_list = get_category_list()
+    # page_name = decode_category(page_name_url)
+    # pag = Page.objects.get(name=page_name)
+
+    # if pag:
+    #         # selects all the pages associated with the selected category
+    #         pages = Page.objects.filter(category=cat)
+    #         category_id = cat.id
+    #         likes = cat.likes
+    # context_dict = {'pag_list': pag_list, 'page_name_url': page_name_url, 'page_name': page_name, 'page_id': page_id, 'mylikes': pagelikes}
+    #context = RequestContext(request, context_dict)            
+
+    # Go render the response and return it to the client.
+    return render_to_response('rango/page.html', context_dict, context)    
+
 def add_category(request):
     # Get the context from the request.
     context = RequestContext(request)
@@ -252,6 +306,54 @@ def add_page(request, category_name_url):
     return render_to_response( 'rango/add_page.html',
                                context_dict,
                                context)
+
+@login_required
+def add_fantasy(request, page_name_url):
+    context = RequestContext(request)
+    pag_list = get_page_list()
+    context_dict = {}
+    context_dict['pag_list'] = pag_list
+
+    page_name = decode_url(page_name_url)
+    if request.method == 'POST':
+        form = FantasyForm(request.POST)
+        
+        if form.is_valid():
+            # This time we cannot commit straight away.
+            # Not all fields are automatically populated!
+            fantasy = form.save(commit=False)
+
+            # Retrieve the associated Category object so we can add it.
+            try:
+                pag = Page.objects.get(name=page_name)
+                fantasy.page = pag
+            except Page.DoesNotExist:
+                return render_to_response( 'rango/add_fantasy.html',
+                                          context_dict,
+                                          context)
+
+            # Also, create a default value for the number of views.
+            # fantasy.views = 0
+
+            # With this, we can then save our new model instance.
+            fantasy.save()
+
+            # Now that the page is saved, display the category instead.
+            return page(request, page_name)
+            #return category(request, category_name_url)
+        else:
+            print form.errors
+    else:
+        form = FantasyForm()
+
+    context_dict['page_name_url']= page_name_url
+    context_dict['page_name'] =  page_name
+    context_dict['form'] = form
+
+    return render_to_response( 'rango/add_fantasy.html',
+                               context_dict,
+                               context)
+
     
 def register(request):
 

@@ -1,7 +1,7 @@
 from rango.models import UserProfile
 from django.contrib.auth.models import User
 from django import forms
-from rango.models import Page, Category
+from rango.models import Page, Category, Fantasy
 
 class CategoryForm(forms.ModelForm):
     # name = forms.CharField(max_length=128, help_text="Please enter the Question:")
@@ -16,7 +16,8 @@ class CategoryForm(forms.ModelForm):
 
 class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter your name:")
-    url = forms.URLField(max_length=200, help_text="Please enter your answer:")
+    #url = forms.URLField(max_length=200, help_text="Please enter your answer:")
+    url = forms.URLField(max_length=200, widget=forms.HiddenInput())
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     mylikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)    
 
@@ -30,16 +31,44 @@ class PageForm(forms.ModelForm):
         # Here, we are hiding the foreign key.
         fields = ('title', 'url', 'views','mylikes')
 
+    # def clean(self):
+    #     cleaned_data = self.cleaned_data
+    #     url = cleaned_data.get('url')
+
+    #     # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+    #     if url and not url.startswith('http://'):
+    #         url = 'http://' + url
+    #         cleaned_data['url'] = url
+
+    #     return cleaned_data
+
+class FantasyForm(forms.ModelForm):
+    entry = forms.CharField(max_length=500, help_text="Please enter your fanatasy:")
+    # title = forms.CharField(max_length=128, help_text="Please enter your name:")
+    # url = forms.URLField(max_length=200, help_text="Please enter your answer:")
+    # views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    # mylikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)    
+
+    class Meta:
+        # Provide an association between the ModelForm and a model
+        model = Fantasy
+
+        # What fields do we want to include in our form?
+        # This way we don't need every field in the model present.
+        # Some fields may allow NULL values, so we may not want to include them...
+        # Here, we are hiding the foreign key.
+        fields = ('entry',)
+
     def clean(self):
         cleaned_data = self.cleaned_data
         url = cleaned_data.get('url')
 
-        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
-        if url and not url.startswith('http://'):
-            url = 'http://' + url
-            cleaned_data['url'] = url
+        # # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+        # if url and not url.startswith('http://'):
+        #     url = 'http://' + url
+        #     cleaned_data['url'] = url
 
-        return cleaned_data
+        # return cleaned_data        
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Please enter a username.")
