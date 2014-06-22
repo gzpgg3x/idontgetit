@@ -63,6 +63,7 @@ def run_query(search_terms):
             results.append({
                 # 'title': result['program']['eventTitle'],
                 'title': result['program']['eventTitle'],
+                #'title': "CHECKED-IN EVENT" + result['program']['eventTitle'],
                 'link': "www.google.com",
                 'summary': result['startTime']})
 

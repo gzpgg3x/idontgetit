@@ -11,23 +11,13 @@ class Category(models.Model):
 
 class Page(models.Model):
     category = models.ForeignKey(Category)
-    title = models.CharField(max_length=128)
+    title = models.CharField(max_length=500)
     url = models.URLField()
     views = models.IntegerField(default=0)
     mylikes = models.IntegerField(default=0)    
 
     def __unicode__(self):
         return self.title
-
-class Fantasy(models.Model):
-    page = models.ForeignKey(Category)
-    entry = models.CharField(max_length=500)
-    # url = models.URLField()
-    # views = models.IntegerField(default=0)
-    # mylikes = models.IntegerField(default=0)    
-
-    def __unicode__(self):
-        return self.title        
 
 class UserProfile(models.Model):
     # A required line - links a UserProfile to User.
