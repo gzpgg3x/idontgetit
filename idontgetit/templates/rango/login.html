@@ -1,10 +1,10 @@
 {% extends "rango/base.html" %}
 
-{% block title %}Login to Rango{% endblock %}
+{% block title %}Login to FIFAntasy{% endblock %}
 
 {% block body_block %}
 <div class="hero-unit">
-    <h1>Login to idontgetit</h1>
+    <h1>Login to FIFAntasy</h1>
 
     <div class="container">
         <form class="form-signin span4" id="login_form" method="post" action="/rango/login/">
@@ -12,7 +12,7 @@
             {% if bad_details %}
             <p><strong>Your username and/or password were incorrect!</strong></p>
             {% elif disabled_account %}
-            <p><strong>Your idontgetit account is currently disabled; we can't log you in!</strong></p>
+            <p><strong>Your FIFAntasy account is currently disabled; we can't log you in!</strong></p>
             {% endif %}
 
 

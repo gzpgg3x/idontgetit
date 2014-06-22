@@ -5,7 +5,7 @@ from rango.models import Page, Category
 
 class CategoryForm(forms.ModelForm):
     # name = forms.CharField(max_length=128, help_text="Please enter the Question:")
-    name = forms.CharField(max_length=300, help_text="Please enter the Question:")
+    name = forms.CharField(max_length=300, help_text="Please enter the TV Event:")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
@@ -15,7 +15,7 @@ class CategoryForm(forms.ModelForm):
         model = Category
 
 class PageForm(forms.ModelForm):
-    title = forms.CharField(max_length=300, help_text="Please enter your name:", widget=forms.widgets.Textarea(attrs={'class': 'categoryText'}))
+    title = forms.CharField(max_length=300, help_text="Please enter your FIFAntasy:", widget=forms.widgets.Textarea(attrs={'class': 'categoryText'}))
     url = forms.URLField(max_length=200, widget=forms.HiddenInput(), initial = "http://www.google.com")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     mylikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)    
