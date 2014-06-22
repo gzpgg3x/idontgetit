@@ -21,7 +21,7 @@ class Migration(SchemaMigration):
         db.create_table(u'rango_page', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['rango.Category'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=128)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=300)),
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('views', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('mylikes', self.gf('django.db.models.fields.IntegerField')(default=0)),
@@ -97,7 +97,7 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['rango.Category']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mylikes': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '300'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'views': ('django.db.models.fields.IntegerField', [], {'default': '0'})
         },
