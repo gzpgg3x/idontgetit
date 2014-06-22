@@ -15,8 +15,8 @@ class CategoryForm(forms.ModelForm):
         model = Category
 
 class PageForm(forms.ModelForm):
-    title = forms.CharField(max_length=500, help_text="Please enter your name:", widget=forms.widgets.Textarea(attrs={'class': 'categoryText'}))
-    url = forms.URLField(max_length=200, help_text="Please enter your name:")
+    title = forms.CharField(max_length=300, help_text="Please enter your name:", widget=forms.widgets.Textarea(attrs={'class': 'categoryText'}))
+    url = forms.URLField(max_length=200, widget=forms.HiddenInput(), initial = "http://www.google.com")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     mylikes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)    
 
@@ -28,18 +28,18 @@ class PageForm(forms.ModelForm):
         # This way we don't need every field in the model present.
         # Some fields may allow NULL values, so we may not want to include them...
         # Here, we are hiding the foreign key.
-        fields = ('title', 'url', 'views','mylikes')
+        fields = ('title','url','views','mylikes')
 
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        url = cleaned_data.get('url')
+    # def clean(self):
+    #     cleaned_data = self.cleaned_data
+    #     url = cleaned_data.get('url')
 
-        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
-        if url and not url.startswith('http://'):
-            url = 'http://' + url
-            cleaned_data['url'] = url
+    #     # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+    #     if url and not url.startswith('http://'):
+    #         url = 'http://' + url
+    #         cleaned_data['url'] = url
 
-        return cleaned_data
+    #     return cleaned_data
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(help_text="Please enter a username.")

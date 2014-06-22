@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class Page(models.Model):
     category = models.ForeignKey(Category)
-    title = models.CharField(max_length=500)
+    title = models.CharField(max_length=300)
     url = models.URLField()
     views = models.IntegerField(default=0)
     mylikes = models.IntegerField(default=0)    
